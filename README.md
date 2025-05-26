@@ -66,7 +66,6 @@ graph TB
     worker_secrets --> worker_deployment
 ```
 
-Sources: [README.md:1-56]()
 
 ## Repository Organization
 
@@ -113,7 +112,6 @@ graph LR
     redis_hpa -.->|"Scales"| redis
 ```
 
-Sources: [README.md:1-56]()
 
 | Component | Purpose | Scaling Strategy |
 |-----------|---------|------------------|
@@ -139,7 +137,7 @@ Key deployment characteristics:
 - **Dependency Management**: Kubernetes handles service startup ordering
 - **External Access**: Immediate availability via Cloudflare tunnel at `kube.1o1.zip`
 
-Sources: [README.md:14-20](), [README.md:32-40](), [README.md:42-46]()19:T254b,# System Architecture
+# System Architecture
 
 <details>
 <summary>Relevant source files</summary>
@@ -220,7 +218,6 @@ graph TB
     N8N_SECRETS --> N8N_APP
 ```
 
-Sources: [README.md:1-56](), [db/postgres-statefulset.yaml:1-39](), [n8n-configmap.yaml:1-29](), [n8n-worker/n8n-worker-configmap.yaml:1-16](), [redis/redis-deployment.yml:1-32]()
 
 ## Component Interaction and Data Flow
 
@@ -258,8 +255,6 @@ graph LR
     N8N_MAIN -.->|"EXECUTIONS_MODE: queue"| N8N_WORKER
 ```
 
-Sources: [n8n-configmap.yaml:13-14](), [n8n-configmap.yaml:19-20](), [n8n-configmap.yaml:26-27](), [n8n-worker/n8n-worker-configmap.yaml:8-15]()
-
 ## Configuration Architecture
 
 The system separates configuration concerns across multiple ConfigMaps and Secrets, enabling independent management of application settings and sensitive data.
@@ -289,7 +284,6 @@ graph TB
     PG_SEC --> PG_POD
 ```
 
-Sources: [n8n-configmap.yaml:10-28](), [n8n-worker/n8n-worker-configmap.yaml:7-15](), [db/postgres-statefulset.yaml:25-27]()
 
 ## Database and Queue Architecture
 
@@ -330,7 +324,6 @@ graph TB
     REDIS_CONTAINER --> REDIS_SERVICE
 ```
 
-Sources: [db/postgres-statefulset.yaml:28-38](), [db/postgres-statefulset.yaml:20-24](), [redis/redis-deployment.yml:19-30](), [n8n-configmap.yaml:15-20](), [n8n-configmap.yaml:25-28]()
 
 ## Deployment Resource Structure
 
@@ -376,7 +369,6 @@ graph TB
     REDIS_HPA -.->|scales| REDIS_DEPLOY
 ```
 
-Sources: [db/postgres-statefulset.yaml:1-12](), [db/postgres-statefulset.yaml:31-38](), [redis/redis-deployment.yml:1-11](), [redis/redis-deployment.yml:24-30]()
 
 ## External Access and Security Model
 
@@ -392,7 +384,7 @@ External access is managed through Cloudflare tunnels, providing secure connecti
 
 The architecture ensures that only the Cloudflare tunnel has external connectivity, while all internal services communicate through Kubernetes ClusterIP services within the `n8n` namespace.
 
-Sources: [n8n-configmap.yaml:13-14](), [n8n-configmap.yaml:19-27](), [README.md:44-45]()1a:T1622,# Core Components
+# Core Components
 
 <details>
 <summary>Relevant source files</summary>
@@ -461,7 +453,6 @@ graph TB
     WORKER_SEC --> WORKER_DEP
 ```
 
-Sources: [n8n-deployment.yaml:1-45](), [n8n-worker/n8n-worker-deployment.yml:1-44]()
 
 ## Deployment Structure and Image Configuration
 
@@ -487,7 +478,6 @@ graph LR
     N8N_WORK --> WORK_RES
 ```
 
-Sources: [n8n-deployment.yaml:20](), [n8n-worker/n8n-worker-deployment.yml:19-20](), [n8n-deployment.yaml:38-44](), [n8n-worker/n8n-worker-deployment.yml:37-43]()
 
 ## n8n Application Component
 
@@ -495,7 +485,6 @@ The main n8n application serves as the web interface and API endpoint. It runs t
 
 For detailed information about the main application deployment, configuration, and networking, see [n8n Application](#3.1).
 
-Sources: [n8n-deployment.yaml:18-29](), [n8n-deployment.yaml:30-37]()
 
 ## n8n Workers Component
 
@@ -503,7 +492,6 @@ The worker component handles distributed workflow execution by running the same 
 
 For complete details on worker deployment and scaling configuration, see [n8n Workers](#3.2).
 
-Sources: [n8n-worker/n8n-worker-deployment.yml:18-20](), [n8n-worker/n8n-worker-deployment.yml:8]()
 
 ## Database Layer Component
 
@@ -527,7 +515,7 @@ For tunnel configuration and external access setup, see [External Access](#3.5).
 
 The components communicate through Kubernetes services and use environment variables for configuration. Both the main application and workers reference database credentials through secrets (`N8N_ENCRYPTION_KEY`, `DB_POSTGRESDB_PASSWORD`) and operational configuration through ConfigMaps.
 
-Sources: [n8n-deployment.yaml:25-29](), [n8n-worker/n8n-worker-deployment.yml:23-36]()1b:T20d7,# n8n Application
+# n8n Application
 
 <details>
 <summary>Relevant source files</summary>
@@ -575,7 +563,6 @@ graph TB
     tunnel --> service
 ```
 
-Sources: [n8n-deployment.yaml:1-45](), [n8n-configmap.yaml:1-29](), [n8n-secrets.yaml:1-19](), [n8n-service.yaml:1-20]()
 
 ## Deployment Configuration
 
@@ -618,7 +605,6 @@ graph LR
     requests --> limits
 ```
 
-Sources: [n8n-deployment.yaml:18-44]()
 
 ## Application Configuration
 
@@ -649,7 +635,6 @@ Webhook URLs are configured to work with the Cloudflare tunnel:
 - `WEBHOOK_TUNNEL_URL`: "https://kube.1o1.zip/" [n8n-configmap.yaml:13]()
 - `WEBHOOK_URL`: "https://kube.1o1.zip/" [n8n-configmap.yaml:14]()
 
-Sources: [n8n-configmap.yaml:10-28]()
 
 ## Security and Authentication
 
@@ -688,7 +673,6 @@ graph TB
 
 **Security Note**: All secret values in the example configuration use placeholder values that must be changed before production deployment [n8n-secrets.yaml:13,15,17]().
 
-Sources: [n8n-configmap.yaml:22-23](), [n8n-secrets.yaml:11-18]()
 
 ## Service Exposure
 
@@ -722,7 +706,6 @@ graph LR
     targetPort --> pods
 ```
 
-Sources: [n8n-service.yaml:10-19]()
 
 ## Health Monitoring
 
@@ -740,7 +723,6 @@ The deployment implements comprehensive health monitoring through Kubernetes pro
 
 Both probes use the same endpoint, which is provided by the n8n application for health status reporting.
 
-Sources: [n8n-deployment.yaml:30-37]()
 
 ## Resource Management
 
@@ -754,8 +736,7 @@ The deployment specifies resource requirements to ensure predictable performance
 
 These resource specifications support the autoscaling configuration that can scale the application from 1 to 5 replicas based on CPU utilization thresholds defined in the HPA controller (see [Auto-scaling Configuration](#5.1)).
 
-Sources: [n8n-deployment.yaml:38-44]()1c:T1d8a,# n8n Workers
-
+# n8n Workers
 <details>
 <summary>Relevant source files</summary>
 
@@ -824,7 +805,6 @@ graph TB
     SECRET --> WN
 ```
 
-Sources: [n8n-worker/n8n-worker-deployment.yml:1-44](), system architecture diagrams
 
 ### Worker Command and Execution Mode
 
@@ -849,7 +829,6 @@ graph LR
     DB_CONFIG --> CMD
 ```
 
-Sources: [n8n-worker/n8n-worker-deployment.yml:18-22](), [n8n-worker/n8n-worker-configmap.yaml:8-15]()
 
 ## Configuration Management
 
@@ -868,7 +847,6 @@ The `n8n-worker-env` ConfigMap defines the core operational parameters for worke
 | `DB_POSTGRESDB_DATABASE` | `n8n` | Database name |
 | `DB_POSTGRESDB_USER` | `n8n` | Database username |
 
-Sources: [n8n-worker/n8n-worker-configmap.yaml:7-15]()
 
 ### Secret Management
 
@@ -877,7 +855,6 @@ The `n8n-worker-secret` provides sensitive configuration data:
 - **`N8N_ENCRYPTION_KEY`**: Used for encrypting sensitive workflow data and credentials
 - **`DB_POSTGRESDB_PASSWORD`**: PostgreSQL database password for authentication
 
-Sources: [n8n-worker/n8n-worker-secrets.yaml:8-10](), [n8n-worker/n8n-worker-deployment.yml:27-36]()
 
 ## Deployment Specification
 
@@ -912,7 +889,6 @@ graph TB
     HPA -.->|"Scales based on CPU"| REPLICAS
 ```
 
-Sources: [n8n-worker/n8n-worker-deployment.yml:7-43]()
 
 ### Resource Allocation
 
@@ -925,7 +901,6 @@ Worker pods are configured with conservative resource allocation suitable for wo
 
 This allocation allows for 2-4 workers per CPU core depending on workload characteristics.
 
-Sources: [n8n-worker/n8n-worker-deployment.yml:37-43]()
 
 ## Service Definition
 
@@ -957,7 +932,6 @@ graph LR
     SELECTOR --> POD3
 ```
 
-Sources: [n8n-worker/n8n-worker-service.yml:1-13]()
 
 ## Integration with System Components
 
@@ -985,8 +959,7 @@ Workers share the same encryption key (`N8N_ENCRYPTION_KEY`) as the main applica
 - Secure handling of sensitive workflow data
 - Compatibility with existing workflow configurations
 
-Sources: [n8n-worker/n8n-worker-configmap.yaml:8-15](), [n8n-worker/n8n-worker-secrets.yaml:9-10]()1d:T17f2,# Database Layer
-
+# Database Layer
 <details>
 <summary>Relevant source files</summary>
 
@@ -1037,7 +1010,6 @@ graph TB
     PSS -.->|"uses"| PSEC
 ```
 
-Sources: [db/postgres-statefulset.yaml:1-39](), [db/postgres-service.yaml:1-19](), [db/postgres-secrets.yaml:1-16]()
 
 ### Database Container Configuration
 
@@ -1063,7 +1035,6 @@ graph LR
     VOLUME --> CONTAINER
 ```
 
-Sources: [db/postgres-statefulset.yaml:19-30]()
 
 ## Database Configuration
 
@@ -1101,7 +1072,6 @@ graph TB
     SVC --> PORT
 ```
 
-Sources: [db/postgres-service.yaml:10-18]()
 
 ## Persistent Storage
 
@@ -1141,7 +1111,6 @@ graph TB
     MOUNT --> PGDATA
 ```
 
-Sources: [db/postgres-statefulset.yaml:31-38](), [db/postgres-statefulset.yaml:28-30]()
 
 ## Database Specifications
 
@@ -1162,8 +1131,7 @@ Database credentials are managed through the `postgres-secrets` Secret resource,
 - `POSTGRES_PASSWORD`: Database password
 - `PGDATA`: Custom data directory path
 
-Sources: [db/postgres-secrets.yaml:11-15](), [db/postgres-statefulset.yaml:25-27]()1e:T21ff,# Cache and Queue Layer
-
+# Cache and Queue Layer
 <details>
 <summary>Relevant source files</summary>
 
@@ -1466,7 +1434,6 @@ graph LR
     TUNNEL -.->|"Health Check"| METRICS["Metrics :2000"]
 ```
 
-Sources: [Cloudflare/cloudflared-deployment.yml:1-50]()
 
 ## Cloudflared Deployment
 
@@ -1517,7 +1484,6 @@ The deployment is configured with the following key specifications:
 | Command | `cloudflared tunnel --no-autoupdate --metrics 0.0.0.0:2000 run` | Tunnel mode with metrics endpoint |
 | Security Context | `net.ipv4.ping_group_range: "65532 65532"` | Network permissions for tunnel operation |
 
-Sources: [Cloudflare/cloudflared-deployment.yml:9-11](), [Cloudflare/cloudflared-deployment.yml:20-23](), [Cloudflare/cloudflared-deployment.yml:25-31](), [Cloudflare/cloudflared-deployment.yml:35-35]()
 
 ### Secret Configuration
 
@@ -1545,7 +1511,6 @@ The secret configuration maps the Cloudflare token to the container environment:
 - **Environment Variable**: `API_TOKEN`
 - **Usage**: Passed as `--token $(API_TOKEN)` argument to the `cloudflared` command
 
-Sources: [Cloudflare/cloudflared-secrets.yml:1-10](), [Cloudflare/cloudflared-deployment.yml:37-42](), [Cloudflare/cloudflared-deployment.yml:33-34]()
 
 ## Health Monitoring
 
@@ -1565,7 +1530,6 @@ The deployment implements a liveness probe that monitors the tunnel status:
 
 The metrics endpoint on port `2000` provides monitoring data and serves the `/ready` health check endpoint used by Kubernetes to determine pod health.
 
-Sources: [Cloudflare/cloudflared-deployment.yml:29-30](), [Cloudflare/cloudflared-deployment.yml:43-49]()
 
 ## Security Considerations
 
@@ -1579,8 +1543,7 @@ The external access implementation incorporates several security measures:
 
 4. **Sysctls Configuration**: Specific network sysctls are configured to enable proper tunnel operation while maintaining security boundaries.
 
-Sources: [Cloudflare/cloudflared-deployment.yml:8-8](), [Cloudflare/cloudflared-deployment.yml:20-23](), [Cloudflare/cloudflared-secrets.yml:6-6]()20:T1b11,# Configuration Management
-
+# Configuration Management
 <details>
 <summary>Relevant source files</summary>
 
@@ -1629,7 +1592,6 @@ graph TB
     cloudflared_secrets --> cloudflared_pod
 ```
 
-Sources: [n8n-configmap.yaml:1-29](), [n8n-secrets.yaml:1-19]()
 
 ## Configuration Structure
 
@@ -1656,7 +1618,6 @@ graph LR
     end
 ```
 
-Sources: [n8n-configmap.yaml:10-28](), [n8n-secrets.yaml:11-18]()
 
 ## Configuration Categories
 
@@ -1671,7 +1632,6 @@ The configuration data is organized into logical categories that align with syst
 | Queue System | `EXECUTIONS_MODE`, `QUEUE_BULL_REDIS_*` | - | Redis queue configuration |
 | Security | - | `N8N_ENCRYPTION_KEY`, `N8N_SECURE_COOKIE` | Encryption and security settings |
 
-Sources: [n8n-configmap.yaml:11-28](), [n8n-secrets.yaml:12-18]()
 
 ## Configuration Injection Pattern
 
@@ -1699,7 +1659,6 @@ graph TB
     env_vars --> n8n_process
 ```
 
-Sources: [n8n-configmap.yaml:10-28](), [n8n-secrets.yaml:11-18]()
 
 ## Database Configuration
 
@@ -1715,7 +1674,6 @@ Database connectivity is configured through a combination of ConfigMap and Secre
 **Secret Database Settings:**
 - `DB_POSTGRESDB_PASSWORD`: Database password [n8n-secrets.yaml:13]()
 
-Sources: [n8n-configmap.yaml:15-20](), [n8n-secrets.yaml:13]()
 
 ## Queue and Worker Configuration
 
@@ -1728,7 +1686,6 @@ The system uses Redis for job queuing with configuration split between queue con
 - `N8N_RUNNERS_ENABLED`: Enables worker mode [n8n-configmap.yaml:24]()
 - `OFFLOAD_MANUAL_EXECUTIONS_TO_WORKERS`: Distributes manual executions [n8n-configmap.yaml:28]()
 
-Sources: [n8n-configmap.yaml:24-28]()
 
 ## Security Configuration
 
@@ -1743,8 +1700,7 @@ Security settings are primarily stored in Secrets to protect sensitive authentic
 - `N8N_ENCRYPTION_KEY`: Key for data encryption [n8n-secrets.yaml:17]()
 - `N8N_SECURE_COOKIE`: Cookie security flag [n8n-secrets.yaml:18]()
 
-Sources: [n8n-configmap.yaml:22-23](), [n8n-secrets.yaml:15-18]()21:T1b7f,# Application Configuration
-
+# Application Configuration
 <details>
 <summary>Relevant source files</summary>
 
@@ -1794,7 +1750,6 @@ graph TB
     WORKER_DEP --> REDIS
 ```
 
-Sources: [n8n-configmap.yaml:1-29](), [n8n-worker/n8n-worker-configmap.yaml:1-16]()
 
 ## Main Application Configuration
 
@@ -1809,7 +1764,6 @@ The `n8n-configmap` ConfigMap provides configuration for the primary n8n applica
 | `N8N_BASIC_AUTH_ACTIVE` | `true` | Enables basic authentication |
 | `N8N_BASIC_AUTH_USER` | `n8n` | Basic auth username |
 
-Sources: [n8n-configmap.yaml:11-23]()
 
 ### Database Configuration
 
@@ -1827,7 +1781,6 @@ graph LR
     DB_CONFIG --> POSTGRES_SVC["postgres-service"]
 ```
 
-Sources: [n8n-configmap.yaml:15-20]()
 
 ### Queue and Worker Configuration
 
@@ -1841,7 +1794,6 @@ The queue configuration enables distributed workflow execution by configuring Re
 | `QUEUE_BULL_REDIS_PORT` | `6379` | Redis service port |
 | `OFFLOAD_MANUAL_EXECUTIONS_TO_WORKERS` | `true` | Routes manual executions to workers |
 
-Sources: [n8n-configmap.yaml:24-28]()
 
 ### Webhook Configuration
 
@@ -1852,7 +1804,6 @@ External webhook access is configured through Cloudflare tunnel endpoints:
 | `WEBHOOK_TUNNEL_URL` | `https://kube.1o1.zip/` | External webhook tunnel endpoint |
 | `WEBHOOK_URL` | `https://kube.1o1.zip/` | External webhook base URL |
 
-Sources: [n8n-configmap.yaml:13-14]()
 
 ## Worker Configuration
 
@@ -1874,7 +1825,6 @@ graph TB
     DB_CONFIG --> DB_USER["DB_POSTGRESDB_USER: n8n"]
 ```
 
-Sources: [n8n-worker/n8n-worker-configmap.yaml:8-15]()
 
 ### Worker-Specific Settings
 
@@ -1886,7 +1836,6 @@ The worker configuration is streamlined to include only settings necessary for q
 | `QUEUE_BULL_REDIS_HOST` | `redis` | Redis service for job queue |
 | `QUEUE_BULL_REDIS_PORT` | `6379` | Redis port configuration |
 
-Sources: [n8n-worker/n8n-worker-configmap.yaml:8-10]()
 
 ## Configuration Flow
 
@@ -1916,7 +1865,6 @@ flowchart TD
     SERVICE_CONNECTIONS --> WORKER_PODS
 ```
 
-Sources: [n8n-configmap.yaml:1-29](), [n8n-worker/n8n-worker-configmap.yaml:1-16]()
 
 ## Configuration Categories
 
@@ -1931,8 +1879,7 @@ The ConfigMap configurations can be categorized by their functional purpose:
 | **Environment** | âœ“ | âœ— | Runtime and timezone settings |
 | **Worker Mode** | âœ“ | âœ“ | Distributed execution settings |
 
-Sources: [n8n-configmap.yaml:11-28](), [n8n-worker/n8n-worker-configmap.yaml:8-15]()22:T1e06,# Secrets Management
-
+# Secrets Management
 <details>
 <summary>Relevant source files</summary>
 
@@ -1987,7 +1934,6 @@ graph TB
     PG_SECRET -.-> N8N_WORKERS
 ```
 
-Sources: [Cloudflare/cloudflared-secrets.yml:1-10](), [db/postgres-secrets.yaml:1-16](), [n8n-secrets.yaml:1-19](), [n8n-worker/n8n-worker-secrets.yaml:1-11]()
 
 ## Database Secrets
 
@@ -2004,7 +1950,6 @@ The PostgreSQL database credentials are managed through the `postgres-secrets` S
 
 The secret is defined using `stringData` for clear text values that are automatically base64-encoded by Kubernetes. The resource includes appropriate labels for component identification and is scoped to the `n8n` namespace.
 
-Sources: [db/postgres-secrets.yaml:11-15]()
 
 ## Application Secrets
 
@@ -2021,7 +1966,6 @@ The main n8n application requires multiple types of sensitive data for database 
 
 The encryption key is particularly critical as it protects sensitive workflow data stored in the database. All values marked with "Change Me!" comments should be updated with secure values before production deployment.
 
-Sources: [n8n-secrets.yaml:12-18]()
 
 ## Worker Secrets
 
@@ -2036,7 +1980,6 @@ The `n8n-worker-secret` resource contains only the essential secrets needed by w
 
 This minimal secret scope reduces the attack surface by not providing workers with authentication credentials they don't require.
 
-Sources: [n8n-worker/n8n-worker-secrets.yaml:9-10]()
 
 ## External Service Secrets
 
@@ -2059,7 +2002,6 @@ graph LR
 
 The secret must be manually populated with a valid Cloudflare API token that has appropriate permissions for tunnel management.
 
-Sources: [Cloudflare/cloudflared-secrets.yml:8-9]()
 
 ## Secret Consumption Patterns
 
@@ -2090,7 +2032,6 @@ graph TB
 
 Both the database password and encryption key must be consistent across the main application and worker components to ensure proper functionality. The PostgreSQL password specifically must match between `postgres-secrets.POSTGRES_PASSWORD` and the `DB_POSTGRESDB_PASSWORD` values in both n8n secret resources.
 
-Sources: [n8n-secrets.yaml:13](), [n8n-worker/n8n-worker-secrets.yaml:10](), [db/postgres-secrets.yaml:15]()
 
 ## Security Considerations
 
@@ -2111,8 +2052,7 @@ Multiple secret resources contain overlapping values that must remain synchroniz
 
 Inconsistencies in these shared values will result in authentication failures or data corruption.
 
-Sources: [n8n-secrets.yaml:13,17](), [n8n-worker/n8n-worker-secrets.yaml:9-10](), [db/postgres-secrets.yaml:15]()23:T1692,# Scaling and Operations
-
+# Scaling and Operations
 <details>
 <summary>Relevant source files</summary>
 
@@ -2159,7 +2099,6 @@ graph TB
     redis_hpa -->|"scaleTargetRef"| redis
 ```
 
-Sources: [n8n-hpa.yaml:1-21](), [n8n-worker/n8n-worker-hpa.yaml:1-21](), [redis/redis-hpa.yaml:1-21]()
 
 ## Component-Specific Scaling Behavior
 
@@ -2204,7 +2143,6 @@ graph LR
     end
 ```
 
-Sources: [n8n-hpa.yaml:14-20](), [n8n-worker/n8n-worker-hpa.yaml:14-20](), [redis/redis-hpa.yaml:14-20]()
 
 ## HPA Resource Configuration
 
@@ -2233,8 +2171,7 @@ Effective HPA operation requires proper resource requests configured on the targ
 
 HPA evaluations occur at regular intervals (typically 15 seconds for scale-up decisions and 5 minutes for scale-down decisions). The system includes built-in stabilization windows to prevent scaling thrashing during load fluctuations.
 
-Sources: [n8n-hpa.yaml:1-21](), [n8n-worker/n8n-worker-hpa.yaml:1-21](), [redis/redis-hpa.yaml:1-21]()24:T15f0,# Auto-scaling Configuration
-
+# Auto-scaling Configuration
 <details>
 <summary>Relevant source files</summary>
 
@@ -2277,7 +2214,6 @@ graph TB
     REDIS_HPA -->|"scales 1-5 replicas"| REDIS_DEP
 ```
 
-Sources: [n8n-hpa.yaml:1-21](), [n8n-worker/n8n-worker-hpa.yaml:1-21](), [redis/redis-hpa.yaml:1-21]()
 
 ## Main Application HPA Configuration
 
@@ -2296,7 +2232,6 @@ The `n8n-hpa` controller manages scaling for the primary n8n application deploym
 
 The HPA specification targets the `n8n-deployment` in the `n8n` namespace and uses CPU utilization as the primary scaling metric [n8n-hpa.yaml:8-11]().
 
-Sources: [n8n-hpa.yaml:1-21]()
 
 ## Worker HPA Configuration  
 
@@ -2325,7 +2260,6 @@ graph LR
 
 The worker HPA maintains a minimum of 3 replicas to ensure consistent job processing capacity even during low-demand periods [n8n-worker/n8n-worker-hpa.yaml:12](), scaling up to 10 replicas when CPU utilization exceeds 70% [n8n-worker/n8n-worker-hpa.yaml:13,19-20]().
 
-Sources: [n8n-worker/n8n-worker-hpa.yaml:1-21]()
 
 ## Redis HPA Configuration
 
@@ -2339,7 +2273,6 @@ The Redis HPA follows the same CPU utilization threshold as other components but
 - **Maximum replicas**: 5 [redis/redis-hpa.yaml:13]()  
 - **Target CPU utilization**: 70% [redis/redis-hpa.yaml:20]()
 
-Sources: [redis/redis-hpa.yaml:1-21]()
 
 ## Scaling Behavior Analysis
 
@@ -2372,7 +2305,6 @@ The worker tier has the highest scaling capacity (3.3x multiplier from min to ma
 
 All three HPAs use a consistent 70% CPU utilization threshold [n8n-hpa.yaml:20](), [n8n-worker/n8n-worker-hpa.yaml:20](), [redis/redis-hpa.yaml:20](). This unified approach ensures coordinated scaling behavior across the entire system stack.
 
-Sources: [n8n-hpa.yaml:14-20](), [n8n-worker/n8n-worker-hpa.yaml:14-20](), [redis/redis-hpa.yaml:14-20]()
 
 ## Resource Target References
 
@@ -2380,8 +2312,7 @@ Each HPA specifies its target deployment using the `scaleTargetRef` configuratio
 
 The autoscaling system provides elastic capacity management for the distributed n8n workflow automation platform, automatically adjusting resource allocation to maintain optimal performance under varying workload conditions.
 
-Sources: [n8n-hpa.yaml:1-21](), [n8n-worker/n8n-worker-hpa.yaml:1-21](), [redis/redis-hpa.yaml:1-21]()25:T1a92,# Service Discovery and Networking
-
+# Service Discovery and Networking
 <details>
 <summary>Relevant source files</summary>
 
@@ -2441,7 +2372,6 @@ graph TB
     WORKER_POD <--> REDIS_SVC
 ```
 
-Sources: [n8n-service.yaml:1-20](), [n8n-worker/n8n-worker-service.yml:1-13](), [db/postgres-service.yaml:1-19](), [redis/redis-service.yml:1-12]()
 
 ## Service Configuration Summary
 
@@ -2452,7 +2382,6 @@ Sources: [n8n-service.yaml:1-20](), [n8n-worker/n8n-worker-service.yml:1-13](), 
 | `postgres-service` | ClusterIP | 5432 | 5432 | `app: postgres` | Database access |
 | `redis` | NodePort | 6379 | 6379 | `app: redis` | Cache/queue access |
 
-Sources: [n8n-service.yaml:11-19](), [n8n-worker/n8n-worker-service.yml:8-13](), [db/postgres-service.yaml:10-18](), [redis/redis-service.yml:7-12]()
 
 ## Internal Communication Flow
 
@@ -2479,7 +2408,6 @@ graph LR
     REDIS_Q -.->|"job pickup"| WORKERS
 ```
 
-Sources: [n8n-service.yaml:16-19](), [n8n-worker/n8n-worker-service.yml:11-13](), [db/postgres-service.yaml:15-18](), [redis/redis-service.yml:10-12]()
 
 ## Service Type Strategy
 
@@ -2555,8 +2483,7 @@ Redis serves as the central message queue, with the main n8n application publish
 
 Services automatically load balance across multiple pod replicas when horizontal pod autoscaling creates additional instances. The Kubernetes service mesh handles endpoint discovery and traffic distribution.
 
-Sources: [n8n-service.yaml:1-20](), [n8n-worker/n8n-worker-service.yml:1-13](), [db/postgres-service.yaml:1-19](), [redis/redis-service.yml:1-12]()26:T219e,# Deployment Guide
-
+# Deployment Guide
 <details>
 <summary>Relevant source files</summary>
 
@@ -2606,7 +2533,6 @@ flowchart TD
     VERIFY --> ACCESS
 ```
 
-Sources: [README.md:14-19]()
 
 ## Kubernetes Resource Structure
 
@@ -2658,7 +2584,6 @@ graph TB
     DEPLOYMENTS --> AUTOSCALING
 ```
 
-Sources: [n8n-deployment.yaml:1-45](), [db/postgres-statefulset.yaml:1-39]()
 
 ## Prerequisites
 
@@ -2672,7 +2597,6 @@ Before deploying the n8n stack, ensure the following requirements are met:
 | Storage | Default StorageClass available | PostgreSQL persistent volume claims |
 | Network | Cluster networking functional | Inter-pod communication |
 
-Sources: [README.md:6-10]()
 
 ## Installation Process
 
@@ -2718,7 +2642,6 @@ Expected pod states:
 - `redis-deployment-*`: Running
 - `cloudflared-deployment-*`: Running (2 instances)
 
-Sources: [README.md:14-19](), [README.md:34-40]()
 
 ## Resource Configuration Details
 
@@ -2736,7 +2659,6 @@ graph LR
     PG_SEC --> PG_POD
 ```
 
-Sources: [db/postgres-statefulset.yaml:31-38]()
 
 ### Application Deployment
 
@@ -2755,7 +2677,6 @@ Health check endpoints:
 - Liveness: `/healthz` on port 5678
 - Readiness: `/healthz` on port 5678
 
-Sources: [n8n-deployment.yaml:30-37](), [n8n-deployment.yaml:38-44]()
 
 ## Access Methods
 
@@ -2785,7 +2706,6 @@ kubectl port-forward service/n8n-service 8080:5678 -n n8n
 open http://localhost:8080
 ```
 
-Sources: [README.md:42-45]()
 
 ## Post-Deployment Verification
 
@@ -2833,7 +2753,6 @@ graph TB
     STORAGE_STATUS --> CONNECTIVITY
 ```
 
-Sources: [README.md:34-40]()
 
 ## Uninstallation
 
@@ -2849,8 +2768,7 @@ kubectl delete -f ./ -n n8n --recursive
 
 **Warning**: This will permanently delete all workflow data stored in PostgreSQL. Ensure data is backed up before uninstalling.
 
-Sources: [README.md:24-30]()27:T236a,# Prerequisites and Setup
-
+# Prerequisites and Setup
 <details>
 <summary>Relevant source files</summary>
 
@@ -2922,7 +2840,6 @@ flowchart TD
     MEM_CHECK --> DISK_CHECK
 ```
 
-Sources: [README.md:8]()
 
 ## Software Prerequisites
 
@@ -2977,7 +2894,6 @@ flowchart LR
     K3S_API --> GET_NS
 ```
 
-Sources: [README.md:9]()
 
 ### Optional Tools
 
@@ -2986,7 +2902,6 @@ Sources: [README.md:9]()
 | `helm` | Package management (alternative deployment) | If using Helm charts |
 | `git` | Repository cloning | For source-based deployment |
 
-Sources: [README.md:10]()
 
 ## Namespace Preparation
 
@@ -3044,7 +2959,6 @@ graph TB
     end
 ```
 
-Sources: [README.md:16]()
 
 ## Security and Access Preparation
 
@@ -3104,7 +3018,6 @@ flowchart TD
     CF_TOKEN --> CF_SECRETS
 ```
 
-Sources: [README.md:44-45]()
 
 ## Pre-deployment Verification
 
@@ -3148,7 +3061,6 @@ kubectl get pods -n kube-system -l app.kubernetes.io/name=traefik
 | Networking | `kubectl get pods -n kube-system` | Core networking pods running |
 | Resource Capacity | `kubectl top nodes` | Sufficient CPU/memory available |
 
-Sources: [README.md:35-40]()
 
 ## Environment Configuration Checklist
 
@@ -3165,8 +3077,7 @@ Before proceeding to installation, ensure all prerequisites are met:
 
 With these prerequisites complete, proceed to [Installation Steps](#6.2) for the deployment process.
 
-Sources: [README.md:6-19]()28:T1d1b,# Installation Steps
-
+# Installation Steps
 <details>
 <summary>Relevant source files</summary>
 
@@ -3222,7 +3133,6 @@ flowchart TD
     GET_IP --> ACCESS
 ```
 
-Sources: [README.md:14-19]()
 
 ## Step-by-Step Installation Process
 
@@ -3236,7 +3146,6 @@ kubectl create namespace n8n
 
 This creates an isolated namespace where all n8n-related resources will be deployed. The namespace provides resource isolation and simplifies management operations.
 
-Sources: [README.md:16]()
 
 ### Step 2: Deploy Stack Resources
 
@@ -3248,7 +3157,6 @@ kubectl apply -f ./ -n n8n --recursive
 
 This command recursively applies all YAML files in the current directory and subdirectories to the `n8n` namespace. The `--recursive` flag ensures that manifests in nested directories are also processed.
 
-Sources: [README.md:19]()
 
 ### Step 3: Resource Creation Mapping
 
@@ -3306,7 +3214,6 @@ flowchart TB
     APPLY_CMD --> NETWORK_LAYER
 ```
 
-Sources: [n8n-deployment.yaml:1-45](), [README.md:18-19]()
 
 ## Resource Creation Verification
 
@@ -3396,7 +3303,6 @@ Expected HPA resources:
 - `n8n-worker-hpa`: 3-10 replicas, 70% CPU target  
 - `redis-hpa`: 1-5 replicas, 70% CPU target
 
-Sources: [README.md:35-40]()
 
 ## Installation Validation
 
@@ -3428,7 +3334,6 @@ Expected resource configuration:
 - CPU limits: 1.0, requests: 0.5
 - Memory limits: 1024Mi, requests: 512Mi
 
-Sources: [n8n-deployment.yaml:38-44]()
 
 The installation is complete when all pods show `Running` status and health checks pass. The system will be accessible through the ingress IP obtained in Step 7.29:T1a0e,# Accessing and Using n8n
 
@@ -3482,7 +3387,6 @@ graph LR
     N8N_SVC --> N8N_POD
 ```
 
-Sources: [Cloudflare/cloudflared-deployment.yml:1-50](), [README.md:32-46]()
 
 ## Cloudflare Tunnel Access
 
@@ -3508,7 +3412,6 @@ The `cloudflared-deployment` uses an API token stored in the `cloudflared-token`
 | Metrics Port | 2000 | Health monitoring |
 | Liveness Probe | `/ready` endpoint | Pod health checks |
 
-Sources: [Cloudflare/cloudflared-deployment.yml:10-50]()
 
 ## Direct Ingress Access
 
@@ -3543,7 +3446,6 @@ graph TB
     N8N_SVC -.-> N8N_WORKERS
 ```
 
-Sources: [README.md:34-40]()
 
 ## Initial Setup and Authentication
 
@@ -3566,7 +3468,6 @@ The n8n instance has access to configuration through environment variables defin
 | `n8n-secrets` | Sensitive credentials | Mounted secrets |
 | `n8n-worker-configmap` | Worker-specific config | Environment variables |
 
-Sources: Referenced from system architecture diagrams
 
 ## Basic Usage Patterns
 
@@ -3598,7 +3499,6 @@ graph LR
     WORKERS -.-> MAIN
 ```
 
-Sources: Referenced from system architecture diagrams
 
 ## External Integrations
 
@@ -3661,8 +3561,7 @@ kubectl get hpa -n n8n
 kubectl top pods -n n8n
 ```
 
-Sources: [Cloudflare/cloudflared-deployment.yml:43-50](), [README.md:49-54]()2a:T293a,# Troubleshooting
-
+# Troubleshooting
 <details>
 <summary>Relevant source files</summary>
 
@@ -3718,7 +3617,6 @@ flowchart TD
     RESOURCE_CHECK -->|No| CONFIG_ISSUES["Configuration Issues"]
 ```
 
-Sources: [README.md:49-54](), [n8n-deployment.yaml:30-37](), [Cloudflare/cloudflared-deployment.yml:43-49]()
 
 ## Component-Specific Troubleshooting
 
@@ -3762,7 +3660,6 @@ flowchart TD
     IMAGE_ERROR -->|Yes| CHECK_IMAGE["Verify image availability"]
 ```
 
-Sources: [n8n-deployment.yaml:18-44]()
 
 ### Database Connectivity Issues
 
@@ -3794,7 +3691,6 @@ nc -zv postgres-service 5432
 | n8n | `n8n-secrets` | `DB_POSTGRESDB_PASSWORD` |
 | PostgreSQL | `postgres-secrets` | Database credentials |
 
-Sources: [n8n-deployment.yaml:25-29]()
 
 ### Redis Queue and Worker Issues
 
@@ -3844,7 +3740,6 @@ kubectl get hpa n8n-worker-hpa -n n8n
 kubectl get deployment n8n-worker-deployment -n n8n
 ```
 
-Sources: Based on system architecture showing Redis as message queue and worker scaling
 
 ### Cloudflare Tunnel Access Issues
 
@@ -3870,7 +3765,6 @@ kubectl logs <cloudflared-pod> -n n8n
 | DNS propagation | Domain not resolving | Check DNS settings in Cloudflare |
 | Pod networking | Can't reach n8n service | Verify service endpoints |
 
-Sources: [Cloudflare/cloudflared-deployment.yml:37-42](), [README.md:51-52]()
 
 ### Auto-scaling and Resource Issues
 
@@ -3914,7 +3808,6 @@ kubectl describe deployment n8n-deployment -n n8n
 kubectl describe deployment n8n-worker-deployment -n n8n
 ```
 
-Sources: [n8n-deployment.yaml:38-44](), based on HPA configurations in system architecture
 
 ### Configuration and Secrets Issues
 
@@ -3959,7 +3852,6 @@ kubectl apply -f <config-file> -n n8n
 kubectl rollout restart deployment/<deployment-name> -n n8n
 ```
 
-Sources: [n8n-deployment.yaml:25-29](), [README.md:49-54]()
 
 ## Emergency Recovery Procedures
 
@@ -3993,7 +3885,6 @@ kubectl get pvc -n n8n
 kubectl exec -it postgres-statefulset-0 -n n8n -- psql -U <username> -d <database>
 ```
 
-Sources: Based on StatefulSet usage for PostgreSQL in system architecture
 
 ### Monitoring and Logging
 
