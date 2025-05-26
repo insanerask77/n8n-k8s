@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n8n-worker
+  namespace: n8n
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: n8n-worker
+  template:
+    metadata:
+      labels:
+        app: n8n-worker
+    spec:
+      containers:
+      - name: n8n-worker
+        image: n8nio/n8n:latest
+        command: ["n8n", "worker"]
+        ports:
+        - containerPort: 5678
+        envFrom:
+        - configMapRef:
+            name: n8n-worker-env
+        env:
+        - name: N8N_ENCRYPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: n8n-worker-secret
+              key: N8N_ENCRYPTION_KEY
+        - name: DB_POSTGRESDB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: n8n-worker-secret
+              key: DB_POSTGRESDB_PASSWORD
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"

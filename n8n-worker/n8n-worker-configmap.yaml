@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: n8n-worker-env
+  namespace: n8n
+data:
+  QUEUE_BULL_REDIS_HOST: "redis"
+  QUEUE_BULL_REDIS_PORT: "6379"
+  EXECUTIONS_MODE: "queue"
+  DB_TYPE: "postgresdb"
+  DB_POSTGRESDB_HOST: "postgres-service"
+  DB_POSTGRESDB_PORT: "5432"
+  DB_POSTGRESDB_DATABASE: "n8n"
+  DB_POSTGRESDB_USER: "n8n"
