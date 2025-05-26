@@ -3,8 +3,6 @@
 
 A simple and scalable n8n stack for a k3s Kubernetes cluster using the official n8n Docker image.
 
-![20250526_1157_Automated Workflow Platform_simple_compose_01jw6093q5e1wst9m447wch0nz](https://github.com/user-attachments/assets/4d953cf0-5652-49a8-bebc-fbfd573f51fc)
-
 ## Prerequisites
 
 - A running k3s Kubernetes cluster
