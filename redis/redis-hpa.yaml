@@ -1,4 +1,3 @@
----
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -17,4 +16,17 @@ spec:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 70
+        averageUtilization: 85
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 90
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 90
+    scaleDown:
+      stabilizationWindowSeconds: 300
+      policies:
+      - type: Percent
+        value: 20
+        periodSeconds: 300

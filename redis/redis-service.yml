@@ -3,6 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: redis
+  namespace: n8n
 spec:
   type: NodePort
   selector:

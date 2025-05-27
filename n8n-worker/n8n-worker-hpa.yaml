@@ -1,4 +1,3 @@
----
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -9,7 +8,7 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: n8n-worker
-  minReplicas: 3
+  minReplicas: 1
   maxReplicas: 10
   metrics:
   - type: Resource
@@ -17,4 +16,17 @@ spec:
       name: cpu
       target:
         type: Utilization
-        averageUtilization: 70
+        averageUtilization: 80  
+  behavior:
+    scaleUp:
+      stabilizationWindowSeconds: 60   
+      policies:
+      - type: Percent
+        value: 50
+        periodSeconds: 60
+    scaleDown:
+      stabilizationWindowSeconds: 300  
+      policies:
+      - type: Percent
+        value: 20
+        periodSeconds: 300
